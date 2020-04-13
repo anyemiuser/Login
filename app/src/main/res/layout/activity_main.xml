@@ -45,6 +45,13 @@
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile"
+        android:id="@+id/btn_mobile_signin"/>
+
+
 
     <Button
         android:layout_width="wrap_content"

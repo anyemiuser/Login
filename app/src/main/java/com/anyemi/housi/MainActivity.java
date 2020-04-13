@@ -1,16 +1,14 @@
-package com.example.logins;
+package com.anyemi.housi;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,11 +31,12 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Array;
 import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -46,12 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private LoginButton loginButton;
     private CircleImageView circleImageView;
     private TextView txtName,txtEmail;
-    private Button signout;
+    private Button signout,btn_mobile;
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
     private CallbackManager callbackManager;
      int RC_SIGN_IN =6;
-
 
 
     @Override
@@ -59,6 +57,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("getInstanceId", "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        //  String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d("token", token);
+                        //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
         loginButton = findViewById(R.id.login_button);
@@ -66,7 +82,17 @@ public class MainActivity extends AppCompatActivity {
         txtName = findViewById(R.id.profile_name);
         txtEmail = findViewById(R.id.profile_email);
         signout = findViewById(R.id.gsignout);
+        btn_mobile=findViewById(R.id.btn_mobile_signin);
         signInButton = findViewById(R.id.sign_in_button);
+
+
+        btn_mobile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(getApplicationContext(), MobileLoginActivity.class);
+                startActivity(i);
+            }
+        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
