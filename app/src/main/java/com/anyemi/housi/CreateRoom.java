@@ -3,12 +3,12 @@ package com.anyemi.housi;
 public class CreateRoom {
     /**
      * status : sucess
-     * Room_id : null
+     * Room_id : 10
      * user_id : 89
      */
 
     private String status;
-    private Object Room_id;
+    private int Room_id;
     private int user_id;
 
     public String getStatus() {
@@ -19,11 +19,11 @@ public class CreateRoom {
         this.status = status;
     }
 
-    public Object getRoom_id() {
+    public int getRoom_id() {
         return Room_id;
     }
 
-    public void setRoom_id(Object Room_id) {
+    public void setRoom_id(int Room_id) {
         this.Room_id = Room_id;
     }
 

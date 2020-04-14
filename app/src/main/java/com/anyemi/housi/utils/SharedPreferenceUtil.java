@@ -46,7 +46,60 @@ public class SharedPreferenceUtil {
             return "0";
         }
     }
+    public static String setId(Context context, String header) {
 
+        try {
+            saveInPreference(context, "id", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+
+    public static String getId(Context context) {
+        try {
+            return getFromPreference(context, "id", "");
+        } catch (Exception e) {
+            //  PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
+    public static String setUsername(Context context, String header) {
+
+        try {
+            saveInPreference(context, "username", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+    public static String getRoom_id(Context context, String header) {
+
+        try {
+            saveInPreference(context, "Room_id", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+
+
+
+    public static String setRoom_id(Context context, String header) {
+
+        try {
+            saveInPreference(context, "Room_id", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
     public static String setLastSyncDate(Context context, String header) {
 
         try {
@@ -57,6 +110,7 @@ public class SharedPreferenceUtil {
         }
         return header;
     }
+
 
     public static String getLastSyncDate(Context context) {
         try {

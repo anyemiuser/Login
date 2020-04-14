@@ -52,7 +52,7 @@ public class ApiServices {
 
     public static Object createroom(Context aContext, String loginRequest) {
         try {
-            return Connection.callHttpPostRequestsV2Jobj(aContext, Constants.CREATE_ROOM, loginRequest);
+            return Connection.callHttpGetRequestsV2(aContext, Constants.CREATE_ROOM+loginRequest, loginRequest);
         } catch (Exception e) {
             e.printStackTrace();
             return e;
