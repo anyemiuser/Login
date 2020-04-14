@@ -30,7 +30,6 @@ public class HomeActivity extends  AppCompatActivity {
         btn_playonline = findViewById(R.id.btn_play_online);
         btn_createroom = findViewById(R.id.btn_create_room);
         btn_joinroom = findViewById(R.id.btn_join_room);
-
         btn_createroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,19 +91,14 @@ public class HomeActivity extends  AppCompatActivity {
             public void taskCompleted(Object data) {
 
                // CreateRoom createRoom =new CreateRoom();
-
                // createRoom= new Gson().fromJson(data.toString(),CreateRoom.class);
-
-
-
                 SharedPreferenceUtil.setRoom_id(getApplicationContext(), et_JoinId.getText().toString());
                // SharedPreferenceUtil.setUser_id(getApplicationContext(), createRoom.getUser_id());
 
                 Globals.showToast(getApplicationContext(), data.toString());
 
-
-            /*    Intent mediaActivity = new Intent(getApplicationContext(), MediaActivity.class);
-                startActivity(mediaActivity);*/
+                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                startActivity(mediaActivity);
 
 
            }
