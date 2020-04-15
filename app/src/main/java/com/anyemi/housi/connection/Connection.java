@@ -155,7 +155,7 @@ public class Connection {
     }
 
 
-    public static Object callHttpGetRequestsV2(Context aContext, String s, String url) {
+    public static Object callHttpGetRequestsV2(Context aContext, String url) {
         if (Network.isAvailable(aContext)) {
 
             HttpURLConnection connection;

@@ -77,8 +77,8 @@ public class MobileLoginActivity extends AppCompatActivity {
               if(isvalidotpnumber()) {
                   postVerifyOtpNumber();
 
-            Intent i=new Intent( getApplicationContext(), HomeActivity.class);
-            startActivity(i);
+            /*Intent i=new Intent( getApplicationContext(), HomeActivity.class);
+            startActivity(i);*/
               }               }
         });
 
@@ -143,8 +143,8 @@ public class MobileLoginActivity extends AppCompatActivity {
                 Globals.showToast(getApplicationContext(), data.toString());
 
 
-            /*    Intent mediaActivity = new Intent(getApplicationContext(), MediaActivity.class);
-                startActivity(mediaActivity);*/
+              Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(i);
 
 
             }

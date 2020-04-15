@@ -1,11 +1,12 @@
 package com.anyemi.housi;
 
 public class JoinRoom {
+
     /**
      * status : sucess
      * msg : Joined Succesfuly
      * user_id : null
-     * game_id :
+     * game_id : 32
      */
 
     private String status;

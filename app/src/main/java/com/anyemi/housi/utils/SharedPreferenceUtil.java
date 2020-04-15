@@ -67,6 +67,19 @@ public class SharedPreferenceUtil {
         }
     }
 
+
+    public static String getUsername(Context context, String header) {
+
+        try {
+            return getFromPreference(context, "id", "");
+        } catch (Exception e) {
+            //  PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
+
     public static String setUsername(Context context, String header) {
 
         try {
@@ -77,19 +90,15 @@ public class SharedPreferenceUtil {
         }
         return header;
     }
-    public static String getRoom_id(Context context, String header) {
-
+    public static String getRoom_id(Context context) {
         try {
-            saveInPreference(context, "Room_id", header);
+            return getFromPreference(context, "Room_id", "");
         } catch (Exception e) {
-            //PrintLog.print(TAG, e.getMessage());
+            //  PrintLog.print(TAG, e.getMessage());
             e.printStackTrace();
+            return "0";
         }
-        return header;
     }
-
-
-
     public static String setRoom_id(Context context, String header) {
 
         try {
@@ -100,6 +109,27 @@ public class SharedPreferenceUtil {
         }
         return header;
     }
+
+    public static String getUser_id(Context context) {
+        try {
+            return getFromPreference(context, "user_id", "");
+        } catch (Exception e) {
+            //  PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+            return "0";
+        }
+    }
+    public static String setUser_id(Context context, String header) {
+
+        try {
+            saveInPreference(context, "user_id", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+
     public static String setLastSyncDate(Context context, String header) {
 
         try {

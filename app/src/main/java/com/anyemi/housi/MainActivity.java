@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anyemi.housi.utils.SharedPreferenceUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.AccessToken;
@@ -56,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String user_id;
+        user_id= SharedPreferenceUtil.getId(getApplicationContext());
+        if(!user_id.equals("")) {
+            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+            startActivity(i);
 
+        }
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
