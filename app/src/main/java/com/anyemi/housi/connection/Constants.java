@@ -11,5 +11,7 @@ public class Constants {
     public static final String VERIFY_OTP = base_url + "otpverify";
     public static final String CREATE_ROOM = base_url + "CreateRoom?id=";
     public static final String JOIN_ROOM = base_url + "JoinRoom";
+    public static final String GENERATE_TICKET = base_url + "generateticket";
+
 
 }

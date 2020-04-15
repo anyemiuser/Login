@@ -66,6 +66,15 @@ public class ApiServices {
             return e;
         }
     }
+    public static Object generateticket(Context aContext, String loginRequest) {
+        try {
+            return Connection.callHttpPostRequestsV2Jobj(aContext, Constants.GENERATE_TICKET, loginRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e;
+        }
+    }
+
 
 
  /*
