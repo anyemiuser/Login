@@ -20,6 +20,7 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
  private LayoutInflater mInflater;
  private ItemClickListener mClickListener;
  Context context;
+ ArrayList<Integer> tickedValues=new ArrayList<>();
 
  // data is passed into the constructor
  TicketRecyclerViewAdapter(Context context, List<List<List<Integer>>>data) {
@@ -47,7 +48,7 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
          LinearLayout layout=layout2.findViewById(R.id.layout_text);
          List<Integer> list=oneticket.get(i);
          for(int j=0;j<list.size();j++){
-             TextView view1=new TextView(context);
+             final TextView view1=new TextView(context);
              LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                      35,
                      LinearLayout.LayoutParams.MATCH_PARENT,
@@ -55,11 +56,26 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
              );
              param.setMargins(0,5,10,0);
              view1.setLayoutParams(param);
-             view1.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+             view1.setBackgroundColor(context.getResources().getColor(R.color.grey));
              view1.setPadding(1,1,1,1);
              view1.setGravity(Gravity.CENTER);
-             if(list.get(j)>0)
-             view1.setText(String.valueOf(list.get(j)));
+             if(list.get(j)>0) {
+                 view1.setText(String.valueOf(list.get(j)));
+                 view1.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         TextView myTextView = (TextView)v;
+                         Integer val=Integer.parseInt(myTextView.getText().toString());
+                         if(!tickedValues.contains(val)){
+                             tickedValues.add(val);
+                             view1.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+                         }else {
+                             tickedValues.remove(val);
+                             view1.setBackgroundColor(context.getResources().getColor(R.color.grey));
+                         }
+                     }
+                 });
+             }
              else
                  view1.setText("");
              layout.addView(view1);
