@@ -30,6 +30,8 @@ public class MobileLoginActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_mobile_login);
        // String reg_code = SharedPreferenceUtil.getRegCode(getApplicationContext());
 
@@ -122,6 +124,8 @@ public class MobileLoginActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
         return requestObject.toString();
     }
     private void postVerifyOtpNumber() {

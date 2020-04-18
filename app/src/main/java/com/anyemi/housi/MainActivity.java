@@ -43,24 +43,26 @@ import java.util.Arrays;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
-    private LoginButton loginButton;
+    //  private LoginButton loginButton;
     private CircleImageView circleImageView;
-    private TextView txtName,txtEmail;
-    private Button signout,btn_mobile;
-    SignInButton signInButton;
+    private TextView txtName, txtEmail;
+    private Button signout, btn_mobile;
+    // private SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
     private CallbackManager callbackManager;
-     int RC_SIGN_IN =6;
+    int RC_SIGN_IN = 6;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_main);
         String user_id;
-        user_id= SharedPreferenceUtil.getId(getApplicationContext());
-        if(!user_id.equals("")) {
-            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+        user_id = SharedPreferenceUtil.getId(getApplicationContext());
+        if (!user_id.equals("")) {
+            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(i);
 
         }
@@ -84,19 +86,19 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        loginButton = findViewById(R.id.login_button);
+        //  loginButton = findViewById(R.id.login_button);
         circleImageView = findViewById(R.id.profile_pic);
         txtName = findViewById(R.id.profile_name);
         txtEmail = findViewById(R.id.profile_email);
         signout = findViewById(R.id.gsignout);
-        btn_mobile=findViewById(R.id.btn_mobile_signin);
-        signInButton = findViewById(R.id.sign_in_button);
+        btn_mobile = findViewById(R.id.btn_mobile_signin);
+        // signInButton = findViewById(R.id.sign_in_button);
 
 
         btn_mobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(getApplicationContext(), MobileLoginActivity.class);
+                Intent i = new Intent(getApplicationContext(), MobileLoginActivity.class);
                 startActivity(i);
             }
         });
@@ -108,13 +110,13 @@ public class MainActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
-        updateUI(account);
+        //  updateUI(account);
 
 
         callbackManager = CallbackManager.Factory.create();
-        loginButton.setReadPermissions(Arrays.asList("email","public_profile"));
-        checkLoginStatus();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        //loginButton.setReadPermissions(Arrays.asList("email","public_profile"));
+        // checkLoginStatus();
+       /* loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode,resultCode,data);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+           // handleSignInResult(task);
         }
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -212,13 +214,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            updateUI(null);
+                           // updateUI(null);
                         }
                     }
                 });
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+   /* private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
@@ -232,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUI(GoogleSignInAccount account) {
+   /* private void updateUI(GoogleSignInAccount account) {
         //Account is not null then user is logged in
         if (account != null) {
             signout .setOnClickListener(new View.OnClickListener() {
@@ -248,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             Glide.with(MainActivity.this).load(account.getPhotoUrl()).into(circleImageView);
         } else {
 
-            signInButton.setSize(SignInButton.SIZE_WIDE);
+           // signInButton.setSize(SignInButton.SIZE_WIDE);
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -260,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
+
+    }
 }

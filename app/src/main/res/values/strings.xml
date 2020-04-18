@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Logins</string>
+    <string name="app_name">Housi Hub</string>
     <string name="facebook_app_id">773560593050977</string>
     <string name="fb_login_protocol_scheme">fb773560593050977</string>
     <string name="loading_txt">Loading...</string>

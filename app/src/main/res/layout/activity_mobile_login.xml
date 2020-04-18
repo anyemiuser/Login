@@ -3,20 +3,33 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+
+    >
     <EditText
         android:id="@+id/et_mobile_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-       android:hint="Enter Mobile No">
+       android:hint="Enter Mobile No"
+        android:inputType="number"
+        android:textColorHint="@color/white"
+
+        android:textColor="@color/white">
 
     </EditText>
     <EditText
         android:id="@+id/et_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter OTP">
+        android:hint="Enter OTP"
+        android:inputType="number"
+        android:textColorHint="@color/white"
+
+        android:textColor="@color/white">
 
     </EditText>
     <TextView
@@ -25,17 +38,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Resend OTP"
-        android:gravity="right">
+        android:gravity="right"
+        >
 
     </TextView>
 
     <Button
         android:id="@+id/btn_next"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
-       android:layout_width="100dp"
-        android:layout_marginTop="50dp"
-        android:text="Next"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/red"
+        android:text="Next">
 
     </Button>
     <Button
@@ -43,7 +58,9 @@
         android:layout_gravity="center"
         android:layout_width="100dp"
         android:text="Verify"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/red"
+        >
 
     </Button>
 

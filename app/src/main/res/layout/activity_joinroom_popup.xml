@@ -2,13 +2,19 @@
 <LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="60dp"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="visible"
+        >
 
 
 
@@ -20,11 +26,13 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="Enter Join Room Id"
+                android:textColorHint="@color/white"
                 android:imeOptions="actionGo"
                 android:inputType="number"
                 android:maxLength="5"
                 android:singleLine="true"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"/>
 
         <Button
             android:id="@+id/btn_join"
@@ -35,18 +43,14 @@
             android:layout_gravity="center"
             android:layout_marginRight="30dp"
             android:layout_weight="0.5"
-            android:background="@color/colorPrimary"
             android:text="Join"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:background="@drawable/popup"
+            android:layout_marginTop="10dp"
+            />
 
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="81dp"
-
-        android:background="@color/white"></View>
 
 
 </LinearLayout>

@@ -2,7 +2,11 @@
 <LinearLayout    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    >
 
     <Button
         android:id="@+id/btn_play_online"
@@ -10,28 +14,33 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="50dp"
         android:text="Play Online"
+        android:background="@drawable/red"
         >
 
     </Button>
 
     <LinearLayout
-        android:layout_marginTop="50dp"
-        android:layout_width="match_parent"
+
+        android:layout_marginTop="30dp"
+        android:layout_width="400dp"
         android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
 
     <Button
         android:id="@+id/btn_create_room"
 
         android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="1dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:text="Create Room"
-            >
+        android:background="@drawable/red"
+
+        >
 
         </Button>
         <Button
@@ -42,6 +51,8 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:text="Join Room"
+            android:background="@drawable/red"
+
             >
 
         </Button>

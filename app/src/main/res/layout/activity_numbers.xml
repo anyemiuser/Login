@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
@@ -23,10 +24,14 @@
             android:layout_weight="1"
             android:text="Generate No"
             android:textColor="@color/white"
-            android:background="@color/colorPrimaryDark"
-            android:layout_height="wrap_content"/>
+            android:background="@drawable/red"
+            android:layout_height="wrap_content"
+
+        />
 
     </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvtickets"
         android:layout_width="match_parent"
@@ -40,5 +45,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rvtickets"
         android:layout_marginTop="10dp"/>
+
 
 </RelativeLayout>
