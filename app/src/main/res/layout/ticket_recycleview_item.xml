@@ -3,88 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_text"
     android:orientation="horizontal"
+    android:padding="1dp"
     android:layout_width="match_parent"
-    android:layout_height="35dp">
+    android:layout_height="25dp"
+>
 
-   <!-- <TextView
-        android:id="@+id/col1"
-        android:padding="3dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
-    <TextView
-        android:id="@+id/col2"
-        android:padding="3dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
-    <TextView
-        android:id="@+id/col3"
-        android:padding="3dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
-    <TextView
-        android:id="@+id/col4"
-        android:padding="3dp"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
-    <TextView
-        android:id="@+id/col5"
-        android:padding="3dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
-    <TextView
-        android:id="@+id/col6"
-        android:padding="3dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
-
-    <TextView
-        android:id="@+id/col7"
-        android:padding="3dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
-    <TextView
-        android:id="@+id/col9"
-        android:padding="3dp"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_marginRight="3dp"
-        android:background="@color/colorAccent"/>
--->
 </LinearLayout>

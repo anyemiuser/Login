@@ -45,12 +45,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/red"
-            android:text="Fb"
+            android:background="@drawable/fb"
+            android:text=""
 
             />
 
         <Button
+            android:visibility="gone"
+
             android:id="@+id/sign_in_button"
             android:layout_width="0dp"
             android:layout_height="70dp"
@@ -63,11 +65,21 @@
             android:layout_width="0dp"
             android:layout_height="70dp"
             android:layout_weight="1"
-            android:background="@drawable/red"
-            android:text="Login with OTP" />
+            android:background="@drawable/mobile"
+            android:text="" />
+
+        <Button
+            android:id="@+id/btn_guest_play"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@drawable/guest"
+            android:text="" />
+
 
 
         <Button
+            android:visibility="gone"
             android:id="@+id/gsignout"
             android:layout_width="0dp"
             android:layout_height="70dp"

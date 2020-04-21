@@ -2,9 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:padding="3dp"
-    android:layout_width="35dp"
-    android:layout_height="35dp">
+    android:padding="1dp"
+    android:layout_width="25dp"
+    android:layout_height="25dp">
+
 
     <TextView
         android:id="@+id/info_text"
@@ -13,5 +14,6 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:background="@color/colorAccent"/>
+
 
 </LinearLayout>

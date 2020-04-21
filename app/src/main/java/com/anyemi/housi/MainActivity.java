@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     //  private LoginButton loginButton;
     private CircleImageView circleImageView;
     private TextView txtName, txtEmail;
-    private Button signout, btn_mobile;
+    private Button signout, btn_mobile,btn_guest;
     // private SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
     private CallbackManager callbackManager;
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         txtEmail = findViewById(R.id.profile_email);
         signout = findViewById(R.id.gsignout);
         btn_mobile = findViewById(R.id.btn_mobile_signin);
+        btn_guest = findViewById(R.id.btn_guest_play);
         // signInButton = findViewById(R.id.sign_in_button);
 
 

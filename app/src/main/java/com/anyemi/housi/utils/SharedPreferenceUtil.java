@@ -129,6 +129,68 @@ public class SharedPreferenceUtil {
         }
         return header;
     }
+ public static String setGame_id(Context context, String header) {
+
+        try {
+            saveInPreference(context, "game_id", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+
+    public static String getGame_id(Context context) {
+        try {
+            return getFromPreference(context, "game_id", "");
+        } catch (Exception e) {
+            //  PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+            return "0";
+        }
+    }
+ public static String getNumbers(Context context) {
+        try {
+            return getFromPreference(context, "numbers", "");
+        } catch (Exception e) {
+            //  PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
+    public static String setNumbers(Context context, String header) {
+
+        try {
+            saveInPreference(context, "numbers", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+ public static String getNos(Context context) {
+        try {
+            return getFromPreference(context, "nos", "");
+        } catch (Exception e) {
+            //  PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
+    public static String setNos(Context context, String header) {
+
+        try {
+            saveInPreference(context, "nos", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+
+
 
     public static String setLastSyncDate(Context context, String header) {
 

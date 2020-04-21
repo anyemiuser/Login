@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.anyemi.housi.connection.ApiServices;
 import com.anyemi.housi.connection.bgtask.BackgroundTask;
 import com.anyemi.housi.connection.bgtask.BackgroundThread;
 import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
-import com.google.gson.Gson;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -85,8 +80,6 @@ public class HomeActivity extends  AppCompatActivity {
         new BackgroundTask(HomeActivity.this, new BackgroundThread() {
             @Override
             public Object runTask() {
-
-
                 return ApiServices.joinroom(HomeActivity.this,joinroomRequestModel());
             }
 
@@ -98,14 +91,12 @@ public class HomeActivity extends  AppCompatActivity {
                // SharedPreferenceUtil.setUser_id(getApplicationContext(), createRoom.getUser_id());
 
                 Globals.showToast(getApplicationContext(), data.toString());
-
                 Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
                 startActivity(mediaActivity);
-
-
            }
         }, getString(R.string.loading_txt)).execute();
     }
+
     private String joinroomRequestModel() {
 
 
@@ -118,16 +109,17 @@ public class HomeActivity extends  AppCompatActivity {
 
         JSONObject requestObject = new JSONObject();
         try {
-
-
             requestObject.put("user_id", user_id);
-             requestObject.put("game_id", game_id);
+            requestObject.put("game_id", game_id);
+            requestObject.put("no_of_tickets","2");
+            requestObject.put("amount","100");
             System.out.println(requestObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return requestObject.toString();
     }
+
 /*private String prepareRequest(){
     String room_id;
     room_id=SharedPreferenceUtil.getRoom_id(getApplicationContext());

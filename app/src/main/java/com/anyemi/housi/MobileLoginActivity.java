@@ -220,7 +220,7 @@ public class MobileLoginActivity extends AppCompatActivity {
             et_mobile.setError("Please enter phone number");
             et_mobile.requestFocus();}
 
-      /* else if(Double.parseDouble(et_mobile.getText().toString())!=10){
+      /*else if(Double.parseDouble(et_mobile.getText().toString())!=10){
             et_mobile.setError("please enter valid Phone Number");
             et_mobile.requestFocus();}*/
 

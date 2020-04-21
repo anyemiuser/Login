@@ -50,7 +50,7 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
          for(int j=0;j<list.size();j++){
              final TextView view1=new TextView(context);
              LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                     35,
+                     25,
                      LinearLayout.LayoutParams.MATCH_PARENT,
                      1.0f
              );
@@ -84,14 +84,6 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
          holder.linearLayout.addView(linearLayout);
      }
 
-    /* if(mData.get(position)>0&&mData.get(position).equals(position+1)){
-         holder.myTextView.setText(String.valueOf(mData.get(position)));
-         holder.myTextView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
-     }else {
-         holder.myTextView.setText("");
-         holder.myTextView.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
-
-     }*/
 
  }
 

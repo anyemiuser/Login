@@ -74,6 +74,14 @@ public class ApiServices {
             return e;
         }
     }
+ public static Object randomnumbergenerator(Context aContext, String loginRequest) {
+        try {
+            return Connection.callHttpPostRequestsV2Jobj(aContext, Constants.RANDOM_NUMBER_GENERATOR, loginRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e;
+        }
+    }
 
 
 
