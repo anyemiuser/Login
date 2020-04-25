@@ -1,5 +1,6 @@
 package com.anyemi.housi;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -7,12 +8,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.anyemi.housi.adapter.UserAdapater;
+import com.anyemi.housi.connection.ApiInterface;
 import com.anyemi.housi.connection.ApiServices;
+import com.anyemi.housi.connection.RetrofitInstance;
 import com.anyemi.housi.connection.bgtask.BackgroundTask;
 import com.anyemi.housi.connection.bgtask.BackgroundThread;
+import com.anyemi.housi.model.GameId;
 import com.anyemi.housi.model.TicketModel;
 import com.anyemi.housi.model.TicketsModel;
+import com.anyemi.housi.model.UserInfo;
+import com.anyemi.housi.model.users;
 import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
 import com.google.gson.Gson;
@@ -26,8 +34,13 @@ import java.util.List;
 import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class NumbersActivity extends AppCompatActivity {
     MyRecyclerViewAdapter adapter;
@@ -40,13 +53,14 @@ public class NumbersActivity extends AppCompatActivity {
     int random_number_index=0;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_numbers);
-        rvtickets=findViewById(R.id.rvtickets);
+
 
         generateTicket();
 
@@ -79,6 +93,9 @@ public class NumbersActivity extends AppCompatActivity {
 
 
     }
+
+
+
     private void generateTicket() {
 
         new BackgroundTask(NumbersActivity.this, new BackgroundThread() {

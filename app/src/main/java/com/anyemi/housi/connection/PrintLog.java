@@ -6,7 +6,8 @@ package com.anyemi.housi.connection;
 
 import android.util.Log;
 
-import com.anyemi.housi.BuildConfig;
+import com.android.installreferrer.BuildConfig;
+//import com.anyemi.housi.BuildConfig;
 
 
 /**
