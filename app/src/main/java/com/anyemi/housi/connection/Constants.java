@@ -13,6 +13,6 @@ public class Constants {
     public static final String JOIN_ROOM = base_url + "JoinRoom";
     public static final String GENERATE_TICKET = base_url + "generateticket";
     public static final String RANDOM_NUMBER_GENERATOR = base_url + "randomnumbergenerator";
-
+    public static final String GET_GAME_HISTORY = base_url + "usergamehistory";
 
 }

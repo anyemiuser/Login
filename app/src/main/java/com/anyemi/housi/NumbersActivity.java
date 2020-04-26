@@ -10,17 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anyemi.housi.adapter.UserAdapater;
-import com.anyemi.housi.connection.ApiInterface;
 import com.anyemi.housi.connection.ApiServices;
-import com.anyemi.housi.connection.RetrofitInstance;
+
 import com.anyemi.housi.connection.bgtask.BackgroundTask;
 import com.anyemi.housi.connection.bgtask.BackgroundThread;
-import com.anyemi.housi.model.GameId;
-import com.anyemi.housi.model.TicketModel;
 import com.anyemi.housi.model.TicketsModel;
-import com.anyemi.housi.model.UserInfo;
-import com.anyemi.housi.model.users;
 import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
 import com.google.gson.Gson;
@@ -49,6 +43,7 @@ public class NumbersActivity extends AppCompatActivity {
     Button generate_btn;
     TextView textView;
     RecyclerView rvtickets;
+    RecyclerView recyclerView;
     TicketsModel model;
     int random_number_index=0;
 
@@ -58,10 +53,8 @@ public class NumbersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_numbers);
         getSupportActionBar().hide();
-
-
-
         generateTicket();
 
         for(int i=0;i<90;i++){
@@ -69,9 +62,10 @@ public class NumbersActivity extends AppCompatActivity {
 
         }
         // set up the RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.rvNumbers);
+        recyclerView = (RecyclerView) findViewById(R.id.rvNumbers);
+        rvtickets=findViewById(R.id.rvtickets);
         int numberOfColumns = 10;
-        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,10));
         adapter = new MyRecyclerViewAdapter(this, data);
       //  adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -90,8 +84,6 @@ public class NumbersActivity extends AppCompatActivity {
             }
         });
         rvtickets.setLayoutManager(new GridLayoutManager(this, 1));
-
-
     }
 
 
@@ -107,7 +99,7 @@ public class NumbersActivity extends AppCompatActivity {
 
             public void taskCompleted(Object data) {
                 Globals.showToast(getApplicationContext(), data.toString());
-                Log.e("response",data.toString());
+              //  Log.e("response",data.toString());
                 Gson gson=new Gson();
                  model=gson.fromJson(data.toString(), TicketsModel.class);
                 List<List<List<Integer>>> data1=model.getTicket_nos();

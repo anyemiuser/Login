@@ -69,8 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout1"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        />
+        android:paddingRight="20dp" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -86,11 +85,9 @@
         android:padding="10dp"
         android:textSize="10sp"
         android:textColor="@color/white"
-
         android:layout_toRightOf="@+id/rvtickets"
         android:text="Ticket1 Claim"
         android:background="@drawable/red">
-
     </Button>
 
     <Button
@@ -106,23 +103,15 @@
         android:text=" Ticket2 Claim">
 
     </Button>
-
-
-
 </LinearLayout>
-
         <androidx.recyclerview.widget.RecyclerView
-
             android:id="@+id/rvNumbers"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="match_parent"
             android:layout_below="@+id/rvtickets"
-
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             />
     </LinearLayout>
-
-
 </RelativeLayout>

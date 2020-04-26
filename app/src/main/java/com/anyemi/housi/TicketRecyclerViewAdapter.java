@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -47,6 +49,8 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
          View layout2 = LayoutInflater.from(context).inflate(R.layout.ticket_recycleview_item, holder.linearLayout, false);
          LinearLayout layout=layout2.findViewById(R.id.layout_text);
          List<Integer> list=oneticket.get(i);
+       //  Collections.sort(list);
+
          for(int j=0;j<list.size();j++){
              final TextView view1=new TextView(context);
              LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
