@@ -46,6 +46,7 @@ public class NumbersActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TicketsModel model;
     int random_number_index=0;
+    String noOfTickets="";
 
 
 
@@ -61,6 +62,7 @@ public class NumbersActivity extends AppCompatActivity {
             data.add(0);
 
         }
+        noOfTickets=getIntent().getStringExtra("noOfTickets");
         // set up the RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.rvNumbers);
         rvtickets=findViewById(R.id.rvtickets);
@@ -80,7 +82,6 @@ public class NumbersActivity extends AppCompatActivity {
                 data.set(number-1,number);
                // adapter = new MyRecyclerViewAdapter(getApplicationContext(), data);
                 adapter.notifyDataSetChanged();
-
             }
         });
         rvtickets.setLayoutManager(new GridLayoutManager(this, 1));
@@ -93,13 +94,12 @@ public class NumbersActivity extends AppCompatActivity {
         new BackgroundTask(NumbersActivity.this, new BackgroundThread() {
             @Override
             public Object runTask() {
-
                 return ApiServices.generateticket(NumbersActivity.this,ticketRequestModel());
             }
 
             public void taskCompleted(Object data) {
-                Globals.showToast(getApplicationContext(), data.toString());
-              //  Log.e("response",data.toString());
+                //  Log.e("response",data.toString());
+               // Globals.showToast(getApplicationContext(), data.toString());
                 Gson gson=new Gson();
                  model=gson.fromJson(data.toString(), TicketsModel.class);
                 List<List<List<Integer>>> data1=model.getTicket_nos();
@@ -127,11 +127,9 @@ public class NumbersActivity extends AppCompatActivity {
 
         JSONObject requestObject = new JSONObject();
         try {
-
-
             requestObject.put("user_id", user_id);
             requestObject.put("game_id", game_id);
-            requestObject.put("no_of_tickets","2");
+            requestObject.put("no_of_tickets",noOfTickets);
             requestObject.put("amount","100");
             System.out.println(requestObject.toString());
         } catch (JSONException e) {

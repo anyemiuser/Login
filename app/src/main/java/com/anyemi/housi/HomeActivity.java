@@ -1,10 +1,15 @@
 package com.anyemi.housi;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.anyemi.housi.connection.ApiServices;
 import com.anyemi.housi.connection.bgtask.BackgroundTask;
@@ -91,8 +96,9 @@ public class HomeActivity extends  AppCompatActivity {
                // SharedPreferenceUtil.setUser_id(getApplicationContext(), createRoom.getUser_id());
 
                 Globals.showToast(getApplicationContext(), data.toString());
-                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
-                startActivity(mediaActivity);
+                showDialog();
+             /*   Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                startActivity(mediaActivity);*/
            }
         }, getString(R.string.loading_txt)).execute();
     }
@@ -118,6 +124,36 @@ public class HomeActivity extends  AppCompatActivity {
             e.printStackTrace();
         }
         return requestObject.toString();
+    }
+    public void showDialog(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final EditText edittext = new EditText(getApplicationContext());
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+        alert.setMessage("Enter No Of Tickets");
+       // alert.setTitle("Enter Your Title");
+
+        alert.setView(edittext);
+
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //What ever you want to do with the value
+                Editable YouEditTextValue = edittext.getText();
+                //OR
+                String noOfTickets = edittext.getText().toString();
+                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                mediaActivity.putExtra("noOfTickets",noOfTickets);
+                startActivity(mediaActivity);
+            }
+        });
+
+        alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // what ever you want to do with No option.
+            }
+        });
+
+        alert.show();
+
     }
 
 /*private String prepareRequest(){
