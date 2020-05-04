@@ -40,6 +40,12 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
  }
 
  // binds the data to the TextView in each cell
+
+    //uma***************
+
+
+   
+
  @Override
  public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
      List<List<Integer>> oneticket=mData.get(position);

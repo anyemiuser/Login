@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class HomeActivity extends  AppCompatActivity {
     private EditText et_JoinId;
-    private Button btn_playonline, btn_createroom, btn_joinroom,btn_Join;
+    private Button btn_playonline, btn_createroom, btn_joinroom, btn_Join;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,10 @@ public class HomeActivity extends  AppCompatActivity {
                 btn_Join.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        postjoinroom();
+                        if(performValidation()) {
+                            postjoinroom();
+                        }
+
 
                     }
                 });
@@ -56,6 +59,24 @@ public class HomeActivity extends  AppCompatActivity {
 
         });
 
+
+    }
+
+    private boolean performValidation() {
+        boolean isValid = false;
+
+
+        if  (et_JoinId.getText().toString().equals("")) {
+            et_JoinId.setError(" Please Enter Room Id");
+            et_JoinId.requestFocus();
+        }
+
+        else {
+
+
+            isValid = true;
+        }
+        return isValid;
 
     }
     private void getcreateroom() {
@@ -140,10 +161,12 @@ public class HomeActivity extends  AppCompatActivity {
                 Editable YouEditTextValue = edittext.getText();
                 //OR
                 String noOfTickets = edittext.getText().toString();
-                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
-                mediaActivity.putExtra("noOfTickets",noOfTickets);
-                startActivity(mediaActivity);
-            }
+
+                    Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                    mediaActivity.putExtra("noOfTickets", noOfTickets);
+                    startActivity(mediaActivity);
+                }
+
         });
 
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
@@ -155,6 +178,8 @@ public class HomeActivity extends  AppCompatActivity {
         alert.show();
 
     }
+
+
 
 /*private String prepareRequest(){
     String room_id;
