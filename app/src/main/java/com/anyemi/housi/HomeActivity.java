@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class HomeActivity extends  AppCompatActivity {
     private EditText et_JoinId;
-    private Button btn_playonline, btn_createroom, btn_joinroom, btn_Join;
+    private Button btn_playonline, btn_createroom, btn_joinroom,btn_Join,btn_game_history;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +32,7 @@ public class HomeActivity extends  AppCompatActivity {
         btn_playonline = findViewById(R.id.btn_play_online);
         btn_createroom = findViewById(R.id.btn_create_room);
         btn_joinroom = findViewById(R.id.btn_join_room);
+        btn_game_history=findViewById(R.id.btn_game_history);
         btn_createroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +58,13 @@ public class HomeActivity extends  AppCompatActivity {
                 });
             }
 
+        });
+        btn_game_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),GameHistory.class);
+                startActivity(intent);
+            }
         });
 
 

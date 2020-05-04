@@ -3,13 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:padding="3dp"
+    android:weightSum="3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/row_layout"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btn_claim"
+        android:layout_weight="1"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        android:text="Ticket1 Claim"
+        android:background="@drawable/red">
+    </Button>
+
 
 
 </LinearLayout>

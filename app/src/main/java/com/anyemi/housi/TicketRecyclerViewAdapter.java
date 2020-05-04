@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -93,8 +94,8 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
          linearLayout.addView(layout2);
          holder.linearLayout.addView(linearLayout);
      }
-
-
+     int no=position+1;
+     holder.btn_claim.setText("TICKET"+no+" CLAIM");
  }
 
  // total number of cells
@@ -107,10 +108,12 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
  // stores and recycles views as they are scrolled off screen
  public class ViewHolder extends RecyclerView.ViewHolder {
      LinearLayout linearLayout;
+     Button btn_claim;
 
      ViewHolder(View itemView) {
          super(itemView);
          linearLayout = itemView.findViewById(R.id.row_layout);
+         btn_claim=itemView.findViewById(R.id.btn_claim);
 
      }
 
