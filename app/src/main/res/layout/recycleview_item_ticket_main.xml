@@ -7,24 +7,124 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:id="@+id/row_layout"
+        android:layout_width="0dp"
         android:orientation="vertical"
         android:layout_weight="2"
-        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/row_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/claim_layout"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <Button
+                    android:id="@+id/btn_first"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="Early Five"
+                    android:background="@drawable/red">
+                </Button>
+                <Button
+                    android:id="@+id/btn_top"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="Top Line"
+                    android:background="@drawable/red">
+                </Button>
+                <Button
+                    android:id="@+id/btn_middle"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="Middle Line"
+                    android:background="@drawable/red">
+                </Button>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+                <Button
+                    android:id="@+id/btn_bottom"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="Bottom Line"
+                    android:background="@drawable/red">
+                </Button>
+                <Button
+                    android:id="@+id/btn_corners"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="4 Corners"
+                    android:background="@drawable/red">
+                </Button>
+                <Button
+                    android:id="@+id/btn_full"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:text="Full Housie"
+                    android:background="@drawable/red">
+                </Button>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
     <Button
         android:id="@+id/btn_claim"
         android:layout_weight="1"
-        android:layout_width="30dp"
+        android:layout_width="0dp"
         android:layout_height="70dp"
-        android:layout_gravity="center"
         android:padding="10dp"
         android:textSize="10sp"
         android:textColor="@color/white"
         android:text="Ticket1 Claim"
         android:background="@drawable/red">
     </Button>
-
-
 
 </LinearLayout>

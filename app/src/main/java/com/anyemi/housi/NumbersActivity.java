@@ -97,13 +97,13 @@ public class NumbersActivity extends AppCompatActivity {
             }
 
             public void taskCompleted(Object data) {
-                //  Log.e("response",data.toString());
+                  Log.e("response tickets",data.toString());
                 // Globals.showToast(getApplicationContext(), data.toString());
                 Gson gson = new Gson();
                 model = gson.fromJson(data.toString(), TicketsModel.class);
                 List<List<List<Integer>>> data1 = model.getTicket_nos();
                 data_all.addAll(model.getNos());
-                TicketRecyclerViewAdapter adapter1 = new TicketRecyclerViewAdapter(getApplicationContext(), data1);
+                TicketRecyclerViewAdapter adapter1 = new TicketRecyclerViewAdapter(getApplicationContext(), data1,model.getTicket_id());
                 //  adapter.setClickListener(this);
                 rvtickets.setAdapter(adapter1);
 
