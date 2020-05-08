@@ -85,11 +85,21 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
                      LinearLayout.LayoutParams.MATCH_PARENT,
                      1.0f
              );
-             param.setMargins(0,5,10,0);
-             view1.setLayoutParams(param);
-             view1.setBackgroundColor(context.getResources().getColor(R.color.grey));
-             view1.setPadding(1,1,1,1);
-             view1.setGravity(Gravity.CENTER);
+             if(j%2==1) {
+                 param.setMargins(0, 0, 0, 0);
+                 view1.setLayoutParams(param);
+                 view1.setBackgroundColor(context.getResources().getColor(R.color.grey));
+                 view1.setPadding(1, 1, 1, 1);
+                 view1.setGravity(Gravity.CENTER);
+             }
+             else{
+                 param.setMargins(0, 0, 0, 0);
+                 view1.setLayoutParams(param);
+                 view1.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
+                 view1.setTextColor(context.getResources().getColor(R.color.white));
+                 view1.setPadding(1, 1, 1, 1);
+                 view1.setGravity(Gravity.CENTER);
+             }
              if(list.get(j)>0) {
                  lists.add(list.get(j));
                  view1.setText(String.valueOf(list.get(j)));

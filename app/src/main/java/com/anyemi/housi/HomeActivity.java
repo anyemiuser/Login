@@ -187,7 +187,20 @@ public class HomeActivity extends  AppCompatActivity {
 
     }
 
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.app_name))
+                .setMessage("Are you sure you want to exit from Game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+finish();}
+                })
+                .setNegativeButton("No", null).show();
+    }
+
+}
 
 /*private String prepareRequest(){
     String room_id;
@@ -202,4 +215,3 @@ public class HomeActivity extends  AppCompatActivity {
     }
     return requestObject.toString();
 }*/
-}

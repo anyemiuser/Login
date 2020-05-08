@@ -5,7 +5,10 @@
     android:orientation="horizontal"
     android:padding="1dp"
     android:layout_width="match_parent"
-    android:layout_height="25dp"
->
+    android:layout_height="25dp">
+
+
+
+
 
 </LinearLayout>

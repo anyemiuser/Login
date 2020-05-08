@@ -99,6 +99,14 @@ public class ApiServices {
             return e;
         }
     }
+ public static Object usersplayingdetails(Context aContext, String loginRequest) {
+        try {
+            return Connection.callHttpPostRequestsV2Jobj(aContext, Constants.USERS_PLAYING_DETAILS, loginRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e;
+        }
+    }
 
 
 

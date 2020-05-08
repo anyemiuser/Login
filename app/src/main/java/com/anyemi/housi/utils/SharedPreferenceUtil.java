@@ -190,6 +190,27 @@ public class SharedPreferenceUtil {
         return header;
     }
 
+public static String getName(Context context) {
+        try {
+            return getFromPreference(context, "name", "");
+        } catch (Exception e) {
+            //  PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+            return "0";
+        }
+    }
+
+    public static String setName(Context context, String header) {
+
+        try {
+            saveInPreference(context, "name", header);
+        } catch (Exception e) {
+            //PrintLog.print(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return header;
+    }
+
 
 
     public static String setLastSyncDate(Context context, String header) {
