@@ -74,6 +74,15 @@ public class ApiServices {
             return e;
         }
     }
+    public static Object getGameUsers(Context aContext, String loginRequest) {
+        try {
+            return Connection.callHttpPostRequestsV2Jobj(aContext, Constants.GAME_USERS, loginRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e;
+        }
+    }
+
     public static Object getGameHistory(Context aContext, String loginRequest) {
         try {
             return Connection.callHttpPostRequestsV2Jobj(aContext, Constants.GET_GAME_HISTORY, loginRequest);

@@ -16,6 +16,7 @@ public class Constants {
     public static final String GET_GAME_HISTORY = base_url + "usergamehistory";
     public static final String USERS_PLAYING_DETAILS = base_url + "game_users";
     public static final String CLAIM_TICKET = base_url + "claim";
+    public static final String GAME_USERS = base_url + "game_users";
 
 
 }

@@ -11,11 +11,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anyemi.housi.Adapters.GameUsersAdapter;
 import com.anyemi.housi.connection.ApiServices;
 
 import com.anyemi.housi.connection.bgtask.BackgroundTask;
 import com.anyemi.housi.connection.bgtask.BackgroundThread;
 import com.anyemi.housi.model.TicketsModel;
+import com.anyemi.housi.model.UsersListModel;
 import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
 import com.google.gson.Gson;
@@ -45,10 +47,11 @@ public class NumbersActivity extends AppCompatActivity {
     Button generate_btn;
     TextView textView;
     RecyclerView rvtickets;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,rvList;
     TicketsModel model;
     int random_number_index = 0;
     String noOfTickets = "";
+
 
 
     @Override
@@ -56,6 +59,7 @@ public class NumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_numbers);
         getSupportActionBar().hide();
+        getUsers();
         generateTicket();
 
         for (int i = 0; i < 90; i++) {
@@ -65,6 +69,9 @@ public class NumbersActivity extends AppCompatActivity {
         noOfTickets = getIntent().getStringExtra("noOfTickets");
         // set up the RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.rvNumbers);
+        rvList=(RecyclerView)findViewById(R.id.rvList);
+        rvList.setLayoutManager(new GridLayoutManager(this, 1));
+
         rvtickets = findViewById(R.id.rvtickets);
         int numberOfColumns = 10;
         recyclerView.setLayoutManager(new GridLayoutManager(this, 10));
@@ -102,12 +109,13 @@ public class NumbersActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 model = gson.fromJson(data.toString(), TicketsModel.class);
                 List<List<List<Integer>>> data1 = model.getTicket_nos();
-                data_all.addAll(model.getNos());
                 TicketRecyclerViewAdapter adapter1 = new TicketRecyclerViewAdapter(getApplicationContext(), data1,model.getTicket_id());
                 //  adapter.setClickListener(this);
                 rvtickets.setAdapter(adapter1);
-
-                startTimer();
+                if(model.getNos()!=null) {
+                    data_all.addAll(model.getNos());
+                    startTimer();
+                }
             }
         }, getString(R.string.loading_txt)).execute();
     }
@@ -177,27 +185,24 @@ public class NumbersActivity extends AppCompatActivity {
                     })
                 .setNegativeButton("No", null).show();
     }
-
-}
- /* private void generateRandomNumber() {
+  private void getUsers() {
 
         new BackgroundTask(NumbersActivity.this, new BackgroundThread() {
             @Override
             public Object runTask() {
 
-                return ApiServices.generateticket(NumbersActivity.this,randomnumberRequestModel());
+                return ApiServices.getGameUsers(NumbersActivity.this,randomnumberRequestModel());
             }
 
             public void taskCompleted(Object data) {
                 Globals.showToast(getApplicationContext(), data.toString());
-                Log.e("response",data.toString());
+                Log.e("responseusers",data.toString());
                 Gson gson=new Gson();
-                 model=gson.fromJson(data.toString(),TicketModel.class);
-                List<List<List<Integer>>> data1=model.getTicket_nos();
+                UsersListModel model=gson.fromJson(data.toString(), UsersListModel.class);
+                List<UsersListModel.PlayersBean> data1=model.getPlayers();
 
-                TicketRecyclerViewAdapter adapter1 = new TicketRecyclerViewAdapter(getApplicationContext(), data1);
-                //  adapter.setClickListener(this);
-                rvtickets.setAdapter(adapter1);
+                GameUsersAdapter adapter1 = new GameUsersAdapter(getApplicationContext(), data1);
+                rvList.setAdapter(adapter1);
         }
         }, getString(R.string.loading_txt)).execute();
     }
@@ -213,17 +218,14 @@ public class NumbersActivity extends AppCompatActivity {
 
         JSONObject requestObject = new JSONObject();
         try {
-
-
-            requestObject.put("user_id", user_id);
             requestObject.put("game_id", game_id);
-            requestObject.put("no_of_tickets","2");
-            requestObject.put("amount","100");
             System.out.println(requestObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return requestObject.toString();
-    }*/
+    }
+
+}
 
 

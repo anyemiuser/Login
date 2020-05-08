@@ -114,6 +114,8 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
                          }else {
                              tickedValues.remove(val);
                              view1.setBackgroundColor(context.getResources().getColor(R.color.grey));
+                             view1.setTextColor(context.getResources().getColor(R.color.black));
+
                          }
                      }
                  });
@@ -233,9 +235,10 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
             }
 
             public void taskCompleted(Object data) {
-                  Log.e("response",data.toString());
+                  Log.e("responseclaim",data.toString());
                  Globals.showToast(context, data.toString());
                 Gson gson = new Gson();
+
             }
         }, context.getString(R.string.loading_txt)).execute();
     }
