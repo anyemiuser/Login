@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +38,7 @@ public class HomeActivity extends  AppCompatActivity {
         btn_createroom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getcreateroom();
+                showDialog1();
             }
         });
         btn_joinroom.setOnClickListener(new View.OnClickListener() {
@@ -98,13 +100,10 @@ public class HomeActivity extends  AppCompatActivity {
 
            public void taskCompleted(Object data) {
 
-
                Globals.showToast(getApplicationContext(), data.toString());
-
 
               /* Intent i = new Intent(getApplicationContext(), MobileLoginActivity.class);
                 startActivity(i);*/
-
 
            }
         }, getString(R.string.loading_txt)).execute();
@@ -154,15 +153,84 @@ public class HomeActivity extends  AppCompatActivity {
         }
         return requestObject.toString();
     }
+    public void showDialog1(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final AlertDialog OptionDialog = alert.create();
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.create_room, null, false);
+        Button proceed=dialogView.findViewById(R.id.proceed);
+        Button cancel=dialogView.findViewById(R.id.cancel);
+        proceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getcreateroom();
+                OptionDialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OptionDialog.dismiss();
+
+            }
+        });
+
+        OptionDialog.setView(dialogView);
+        OptionDialog.show();
+
+    }
+
     public void showDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        final EditText edittext = new EditText(getApplicationContext());
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.ticket_selection, null, false);
+        LinearLayout layout1,layout2,layout3,layout4;
+        layout1=dialogView.findViewById(R.id.layout1);
+        layout2=dialogView.findViewById(R.id.layout2);
+        layout3=dialogView.findViewById(R.id.layout3);
+        layout4=dialogView.findViewById(R.id.layout4);
+        layout1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                mediaActivity.putExtra("noOfTickets", "1");
+                startActivity(mediaActivity);
+            }
+        });
+        layout2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                mediaActivity.putExtra("noOfTickets", "2");
+                startActivity(mediaActivity);
+            }
+        });
+        layout3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                mediaActivity.putExtra("noOfTickets", "3");
+                startActivity(mediaActivity);
+            }
+        });
+        layout4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
+                mediaActivity.putExtra("noOfTickets", "4");
+                startActivity(mediaActivity);
+            }
+        });
+
+
+
+
+      /*  final EditText edittext = new EditText(getApplicationContext());
         edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-        alert.setMessage("Enter No Of Tickets");
+        alert.setMessage("Enter No Of Tickets");*/
        // alert.setTitle("Enter Your Title");
 
-        alert.setView(edittext);
+        alert.setView(dialogView);
 
+/*
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //What ever you want to do with the value
@@ -176,12 +244,15 @@ public class HomeActivity extends  AppCompatActivity {
                 }
 
         });
+*/
 
+/*
         alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // what ever you want to do with No option.
             }
         });
+*/
 
         alert.show();
 
