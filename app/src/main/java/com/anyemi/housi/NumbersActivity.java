@@ -19,6 +19,7 @@ import com.anyemi.housi.connection.bgtask.BackgroundThread;
 import com.anyemi.housi.model.TicketsModel;
 import com.anyemi.housi.model.UsersListModel;
 import com.anyemi.housi.utils.Globals;
+import com.anyemi.housi.utils.Last10Adapter;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
 import com.google.gson.Gson;
 
@@ -42,12 +43,14 @@ import retrofit2.Callback;
 
 public class NumbersActivity extends AppCompatActivity {
     MyRecyclerViewAdapter adapter;
+    Last10Adapter Last10Adap;
     ArrayList<Integer> data = new ArrayList<>();
+    ArrayList<Integer> data_last10 = new ArrayList<>();
     ArrayList<Integer> data_all = new ArrayList<>();
     Button generate_btn;
     TextView textView;
     RecyclerView rvtickets;
-    RecyclerView recyclerView,rvList;
+    RecyclerView recyclerView,rvList,rv_lastNumbers;
     TicketsModel model;
     int random_number_index = 0;
     String noOfTickets = "";
@@ -70,25 +73,39 @@ public class NumbersActivity extends AppCompatActivity {
         // set up the RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.rvNumbers);
         rvList=(RecyclerView)findViewById(R.id.rvList);
+
+
+        LinearLayoutManager layoutManager= new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        rv_lastNumbers=(RecyclerView)findViewById(R.id.rv_lastNumbers);
+        rv_lastNumbers.setLayoutManager(layoutManager);
+        Last10Adap= new Last10Adapter(this, data_last10);
+        rv_lastNumbers.setAdapter(Last10Adap);
+
+
         rvList.setLayoutManager(new GridLayoutManager(this, 1));
 
         rvtickets = findViewById(R.id.rvtickets);
         int numberOfColumns = 10;
         recyclerView.setLayoutManager(new GridLayoutManager(this, 10));
         adapter = new MyRecyclerViewAdapter(this, data);
+
         //  adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+
+
         final Random r = new Random();
         textView = (TextView) findViewById(R.id.randomText);
         generate_btn = (Button) findViewById(R.id.generate_btn);
         generate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer number = r.nextInt(90) + 1;
+              /*  Integer number = r.nextInt(90) + 1;
                 textView.setText(Integer.toString(number));
                 data.set(number - 1, number);
                 // adapter = new MyRecyclerViewAdapter(getApplicationContext(), data);
                 adapter.notifyDataSetChanged();
+
+                */
             }
         });
         rvtickets.setLayoutManager(new GridLayoutManager(this, 1));
@@ -105,6 +122,32 @@ public class NumbersActivity extends AppCompatActivity {
 
             public void taskCompleted(Object data) {
                   Log.e("response tickets",data.toString());
+                // Globals.showToast(getApplicationContext(), data.toString());
+                Gson gson = new Gson();
+                model = gson.fromJson(data.toString(), TicketsModel.class);
+                List<List<List<Integer>>> data1 = model.getTicket_nos();
+                TicketRecyclerViewAdapter adapter1 = new TicketRecyclerViewAdapter(getApplicationContext(), data1,model.getTicket_id());
+                //  adapter.setClickListener(this);
+                rvtickets.setAdapter(adapter1);
+                if(model.getNos()!=null) {
+                    data_all.addAll(model.getNos());
+                    startTimer();
+                }
+            }
+        }, getString(R.string.loading_txt)).execute();
+    }
+
+
+    private void startGame() {
+
+        new BackgroundTask(NumbersActivity.this, new BackgroundThread() {
+            @Override
+            public Object runTask() {
+                return ApiServices.startGame(NumbersActivity.this, startGameModel());
+            }
+
+            public void taskCompleted(Object data) {
+                Log.e("response tickets",data.toString());
                 // Globals.showToast(getApplicationContext(), data.toString());
                 Gson gson = new Gson();
                 model = gson.fromJson(data.toString(), TicketsModel.class);
@@ -142,6 +185,26 @@ public class NumbersActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return requestObject.toString();
+    } private String startGameModel() {
+
+
+        String user_id, game_id;
+        user_id = SharedPreferenceUtil.getId(getApplicationContext());
+        game_id = SharedPreferenceUtil.getRoom_id(getApplicationContext());
+        // room_id=SharedPreferenceUtil.getRoom_id(getApplicationContext());
+
+        //   version_id = BuildConfig.VERSION_NAME;
+
+        JSONObject requestObject = new JSONObject();
+        try {
+            requestObject.put("user_id", user_id);
+            requestObject.put("game_id", game_id);
+            requestObject.put("TYPE", "START_GAME");
+            System.out.println(requestObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return requestObject.toString();
     }
 
     private void startTimer() {
@@ -149,6 +212,14 @@ public class NumbersActivity extends AppCompatActivity {
 
         textView.setText(data_all.get(random_number_index) + "");
         data.set(data_all.get(random_number_index) - 1, data_all.get(random_number_index));
+
+        if(data_last10.size()>9){
+            data_last10.remove(0);
+        }
+
+        data_last10.add( data_all.get(random_number_index));
+
+        Last10Adap.notifyDataSetChanged();
         adapter.notifyDataSetChanged();
 
         new CountDownTimer(spam, 1000) {

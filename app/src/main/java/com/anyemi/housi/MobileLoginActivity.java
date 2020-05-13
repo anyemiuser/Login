@@ -14,6 +14,8 @@ import com.anyemi.housi.connection.bgtask.BackgroundTask;
 import com.anyemi.housi.connection.bgtask.BackgroundThread;
 import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -119,6 +121,7 @@ public class MobileLoginActivity extends AppCompatActivity {
         JSONObject requestObject = new JSONObject();
         try {
             requestObject.put("mobile_number", mobile_no);
+            requestObject.put("device_id", FirebaseInstanceId.getInstance().getToken());
            /// requestObject.put("AppVersion", version_id);
             System.out.println(requestObject.toString());
         } catch (JSONException e) {

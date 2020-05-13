@@ -1,45 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp">
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/randomText"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:textSize="18sp"
-            android:gravity="center"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:drawable/ic_menu_today"
             android:textColor="@color/white"
-            android:layout_height="80dp"/>
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_lastNumbers"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="Claims"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="tickets"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
 
         <Button
             android:id="@+id/generate_btn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="Generate No"
-            android:visibility="gone"
-            android:textColor="@color/white"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+           android:layout_gravity="center"
             android:background="@drawable/red"
-            android:layout_height="wrap_content"
+            android:text="Start"
+            android:textColor="@color/white"
+            android:visibility="visible"
 
-        />
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -51,70 +80,66 @@
                 android:id="@+id/svid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvtickets"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
+        <!--
+     <LinearLayout
+         android:layout_width="0dp"
+         android:layout_weight="1"
+         android:layout_height="180dp"
+         android:orientation="vertical"
+         android:visibility="invisible">
 
+     <Button
+         android:id="@+id/btn_claim1"
+         android:layout_weight="1"
+         android:layout_width="wrap_content"
+         android:layout_height="0dp"
+         android:layout_gravity="center"
+         android:padding="10dp"
+         android:textSize="10sp"
+         android:textColor="@color/white"
+         android:layout_toRightOf="@+id/rvtickets"
+         android:text="Ticket1 Claim"
+         android:background="@drawable/red">
+     </Button>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvtickets"
-        android:layout_weight="3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp" />
-       <!--
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="180dp"
-        android:orientation="vertical"
-        android:visibility="invisible">
+     <Button
+         android:id="@+id/btn_claim2"
+         android:layout_weight="1"
+         android:layout_width="wrap_content"
+         android:layout_height="0dp"
+         android:layout_gravity="center"
+         android:layout_toRightOf="@+id/rvtickets"
+         android:background="@drawable/red"
+         android:textSize="10sp"
+         android:textColor="@color/white"
+         android:text=" Ticket2 Claim">
 
-    <Button
-        android:id="@+id/btn_claim1"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:textSize="10sp"
-        android:textColor="@color/white"
-        android:layout_toRightOf="@+id/rvtickets"
-        android:text="Ticket1 Claim"
-        android:background="@drawable/red">
-    </Button>
-
-    <Button
-        android:id="@+id/btn_claim2"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_toRightOf="@+id/rvtickets"
-        android:background="@drawable/red"
-        android:textSize="10sp"
-        android:textColor="@color/white"
-        android:text=" Ticket2 Claim">
-
-    </Button>
-</LinearLayout>
--->
+     </Button>
+ </LinearLayout>
+ -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvNumbers"
             android:layout_width="0dp"
-            android:layout_weight="2"
             android:layout_height="220dp"
+            android:layout_weight="2"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            />
+            android:paddingRight="20dp" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
