@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "491349874334",
-    "firebase_url": "https://housihub.firebaseio.com",
-    "project_id": "housihub",
-    "storage_bucket": "housihub.appspot.com"
+    "project_number": "511913436533",
+    "firebase_url": "https://anyemi-5cf6f.firebaseio.com",
+    "project_id": "anyemi-5cf6f",
+    "storage_bucket": "anyemi-5cf6f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491349874334:android:bd14d3b9a750bf3382cd8f",
+        "mobilesdk_app_id": "1:511913436533:android:d8f5d9a0c3f27c906b9f3c",
         "android_client_info": {
           "package_name": "com.anyemi.housi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491349874334-9rm35op33o77b931t899ftfeegotrlm3.apps.googleusercontent.com",
+          "client_id": "511913436533-v2ml04ht2rc6arlgoeprc85v4uggisu2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anyemi.housi",
+            "certificate_hash": "b5c5a10ec30a20cd630a1b5743aee3473665751d"
+          }
+        },
+        {
+          "client_id": "511913436533-nauhj3b5vi35iemf4raov786niho8h7r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA_emAZCxpEG9Ivotw9SbqREPpizEGopk0"
+          "current_key": "AIzaSyAjhcdPmDEtjJ2-JDqJmqCsx9YX18Sqs00"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "491349874334-9rm35op33o77b931t899ftfeegotrlm3.apps.googleusercontent.com",
+              "client_id": "511913436533-nauhj3b5vi35iemf4raov786niho8h7r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
