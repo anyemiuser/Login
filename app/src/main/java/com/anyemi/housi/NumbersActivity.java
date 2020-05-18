@@ -1,8 +1,11 @@
 package com.anyemi.housi;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -62,6 +65,8 @@ public class NumbersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_numbers);
         getSupportActionBar().hide();
+        IntentFilter intentFilter = new IntentFilter(FirebaseMessagingServices.ACTION_RECEIVE);
+        registerReceiver(receiver, intentFilter);
         getUsers();
         generateTicket();
 
@@ -99,6 +104,7 @@ public class NumbersActivity extends AppCompatActivity {
         generate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startGame();
               /*  Integer number = r.nextInt(90) + 1;
                 textView.setText(Integer.toString(number));
                 data.set(number - 1, number);
@@ -131,7 +137,7 @@ public class NumbersActivity extends AppCompatActivity {
                 rvtickets.setAdapter(adapter1);
                 if(model.getNos()!=null) {
                     data_all.addAll(model.getNos());
-                    startTimer();
+                   // startTimer();
                 }
             }
         }, getString(R.string.loading_txt)).execute();
@@ -148,8 +154,8 @@ public class NumbersActivity extends AppCompatActivity {
 
             public void taskCompleted(Object data) {
                 Log.e("response tickets",data.toString());
-                // Globals.showToast(getApplicationContext(), data.toString());
-                Gson gson = new Gson();
+                 Globals.showToast(getApplicationContext(), data.toString());
+              /*  Gson gson = new Gson();
                 model = gson.fromJson(data.toString(), TicketsModel.class);
                 List<List<List<Integer>>> data1 = model.getTicket_nos();
                 TicketRecyclerViewAdapter adapter1 = new TicketRecyclerViewAdapter(getApplicationContext(), data1,model.getTicket_id());
@@ -158,7 +164,7 @@ public class NumbersActivity extends AppCompatActivity {
                 if(model.getNos()!=null) {
                     data_all.addAll(model.getNos());
                     startTimer();
-                }
+                }*/
             }
         }, getString(R.string.loading_txt)).execute();
     }
@@ -189,7 +195,7 @@ public class NumbersActivity extends AppCompatActivity {
 
 
         String user_id, game_id;
-        user_id = SharedPreferenceUtil.getId(getApplicationContext());
+        user_id = SharedPreferenceUtil.getMobile_number(getApplicationContext());
         game_id = SharedPreferenceUtil.getRoom_id(getApplicationContext());
         // room_id=SharedPreferenceUtil.getRoom_id(getApplicationContext());
 
@@ -197,9 +203,9 @@ public class NumbersActivity extends AppCompatActivity {
 
         JSONObject requestObject = new JSONObject();
         try {
-            requestObject.put("user_id", user_id);
+            requestObject.put("regid", user_id);
             requestObject.put("game_id", game_id);
-            requestObject.put("TYPE", "START_GAME");
+            requestObject.put("type", "START_GAME");
             System.out.println(requestObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -252,6 +258,7 @@ public class NumbersActivity extends AppCompatActivity {
 
                         Intent i=new Intent(getApplicationContext(),HomeActivity.class);
                         startActivity(i);
+                        unregisterReceiver(receiver);
                     }
                     })
                 .setNegativeButton("No", null).show();
@@ -296,7 +303,24 @@ public class NumbersActivity extends AppCompatActivity {
         }
         return requestObject.toString();
     }
+    BroadcastReceiver receiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent!=null){
+                String type=intent.getStringExtra("type");
+                if(type.equals("START_GAME")){
+                    startTimer();
+                }
+            }
 
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }
 
 

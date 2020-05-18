@@ -21,7 +21,7 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 
 public class FirebaseMessagingServices extends FirebaseMessagingService {
-   // public static final String ACTION_RECEIVE="com.fifthestate.newsmeter.Service.action.RECEIVE";
+    public static final String ACTION_RECEIVE="com.anyemi.housi.Service.action.RECEIVE";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -35,11 +35,20 @@ public class FirebaseMessagingServices extends FirebaseMessagingService {
              body = remoteMessage.getNotification().getBody();
         }
         if( remoteMessage.getData().size()>0) {
-            Log.e("notification", "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Log.e("messaqge", "Message  Body: " + remoteMessage.getData());
+            Log.e("messaqge", "Message : " +  remoteMessage.getData().get("type"));
 
-             body = remoteMessage.getData().get("url");
+
+           String  type ="START_GAME";
+            Intent broadcast = new Intent();
+            broadcast.putExtra("type", remoteMessage.getData().get("type")+"");
+
+            broadcast.setAction(ACTION_RECEIVE);
+                    sendBroadcast(broadcast);
+
         }
 
+/*
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -77,6 +86,7 @@ public class FirebaseMessagingServices extends FirebaseMessagingService {
 
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         nm.notify(0, builder.build());
+*/
     }
 
     @Override

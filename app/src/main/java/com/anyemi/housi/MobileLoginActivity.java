@@ -2,11 +2,13 @@ package com.anyemi.housi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.anyemi.housi.connection.ApiServices;
@@ -14,7 +16,10 @@ import com.anyemi.housi.connection.bgtask.BackgroundTask;
 import com.anyemi.housi.connection.bgtask.BackgroundThread;
 import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
@@ -25,6 +30,7 @@ public class MobileLoginActivity extends AppCompatActivity {
     private TextView tv_Resendotp;
     private EditText  et_mobile,et_otp_no;
     private Button  btn_Next,btn_verify_otp;
+    String token;
    // EditText  et_mobile2 = new EditText(CreateRoomActivity.this);
 
    // Button  btn_Next2 = new Button(CreateRoomActivity.this);
@@ -35,6 +41,24 @@ public class MobileLoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_mobile_login);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("getInstanceId", "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                         token = task.getResult().getToken();
+
+                        // Log and toast
+                        //  String msg = getString(R.string.msg_token_fmt, token);
+                        Log.e("token", token);
+                        //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
        // String reg_code = SharedPreferenceUtil.getRegCode(getApplicationContext());
 
 
@@ -121,7 +145,7 @@ public class MobileLoginActivity extends AppCompatActivity {
         JSONObject requestObject = new JSONObject();
         try {
             requestObject.put("mobile_number", mobile_no);
-            requestObject.put("device_id", FirebaseInstanceId.getInstance().getToken());
+            requestObject.put("device_id", token);
            /// requestObject.put("AppVersion", version_id);
             System.out.println(requestObject.toString());
         } catch (JSONException e) {
@@ -209,6 +233,8 @@ public class MobileLoginActivity extends AppCompatActivity {
         JSONObject requestObject = new JSONObject();
         try {
             requestObject.put("mobile_number", mobile_no);
+            requestObject.put("device_id", token);
+
             /// requestObject.put("AppVersion", version_id);
             System.out.println(requestObject.toString());
         } catch (JSONException e) {

@@ -13,6 +13,7 @@ public class SharedPreferenceUtil {
 
     private SharedPreferences preferences;
     private static final String TAG = "SharedPreferenceUtil";
+    public static final String TOKEN = "device_id";
 
     private SharedPreferenceUtil() {
         // Add a private constructor to hide the implicit public one.

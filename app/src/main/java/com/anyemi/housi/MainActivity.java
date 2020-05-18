@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anyemi.housi.connection.Constants;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     int RC_SIGN_IN = 6;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,24 +68,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
 
         }
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("getInstanceId", "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-
-                        // Log and toast
-                        //  String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("token", token);
-                        //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
 
 
         //  loginButton = findViewById(R.id.login_button);
