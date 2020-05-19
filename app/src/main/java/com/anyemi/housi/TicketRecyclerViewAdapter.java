@@ -184,8 +184,13 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
              claimTicket(ticketId,lists,"housie");
          }
      });
-
-
+     holder.btn_corners.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             ticketId=ticketIds.get(pos);
+             claimTicket(ticketId,lists,"corners");
+         }
+     });
  }
  public void claimResp(Integer tiket_id,String claimType,String status){
      if(status.equals("success")){
