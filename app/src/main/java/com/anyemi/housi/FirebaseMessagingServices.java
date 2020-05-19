@@ -39,9 +39,13 @@ public class FirebaseMessagingServices extends FirebaseMessagingService {
             Log.e("messaqge", "Message : " +  remoteMessage.getData().get("type"));
 
 
-           String  type ="START_GAME";
+          // String  type ="START_GAME";
             Intent broadcast = new Intent();
             broadcast.putExtra("type", remoteMessage.getData().get("type")+"");
+            broadcast.putExtra("claim_type",remoteMessage.getData().get("claim_type"));
+            broadcast.putExtra("game_id",remoteMessage.getData().get("game_id"));
+            broadcast.putExtra("ticket_id",remoteMessage.getData().get("ticket_id"));
+            broadcast.putExtra("status",remoteMessage.getData().get("status"));
 
             broadcast.setAction(ACTION_RECEIVE);
                     sendBroadcast(broadcast);

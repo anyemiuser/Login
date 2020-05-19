@@ -37,15 +37,17 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
  private List<Integer> ticketIds;
  Context context;
     int ticketId;
+    RecyclerView recyclerView;
 
     ArrayList<Integer> tickedValues=new ArrayList<>();
 
  // data is passed into the constructor
- TicketRecyclerViewAdapter(Context context, List<List<List<Integer>>>data,List<Integer> ticketIds) {
+ TicketRecyclerViewAdapter(Context context, List<List<List<Integer>>>data,List<Integer> ticketIds,RecyclerView recyclerView) {
      this.mInflater = LayoutInflater.from(context);
      this.mData = data;
      this.context=context;
      this.ticketIds=ticketIds;
+     this.recyclerView=recyclerView;
  }
 
  // inflates the cell layout from xml when needed
@@ -56,12 +58,6 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
      return new ViewHolder(view);
  }
 
- // binds the data to the TextView in each cell
-
-    //uma***************
-
-
-   
 
  @Override
  public void onBindViewHolder(@NonNull  ViewHolder holder,  int position) {
@@ -138,7 +134,6 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
 
              if(btn.getText().toString().equals("TICKET"+no+" CLAIM")){
                  holder1.btn_claim.setText("TICKET"+no+" HIDE");
-               ticketId=ticketIds.get(pos);
                  holder1.claim_layout.setVisibility(View.VISIBLE);
                //  claimTicket(ticketId,lists);
 
@@ -152,34 +147,75 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
      holder.btn_first.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-             claimTicket(ticketId,lists,"first");
+             ticketId=ticketIds.get(pos);
+
+             claimTicket(ticketId,lists,"firstfive");
          }
      });
      holder.btn_top.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
+             ticketId=ticketIds.get(pos);
+
              claimTicket(ticketId,lists,"top");
          }
      });
      holder.btn_middle.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
+             ticketId=ticketIds.get(pos);
+
              claimTicket(ticketId,lists,"middle");
          }
      });
      holder.btn_bottom.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
+             ticketId=ticketIds.get(pos);
+
              claimTicket(ticketId,lists,"last");
          }
      });
      holder.btn_full.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-             claimTicket(ticketId,lists,"full");
+             ticketId=ticketIds.get(pos);
+
+             claimTicket(ticketId,lists,"housie");
          }
      });
 
+
+ }
+ public void claimResp(Integer tiket_id,String claimType,String status){
+     if(status.equals("success")){
+         for(int i=0;i<ticketIds.size();i++){
+             if(ticketIds.get(i).equals(tiket_id)){
+                 RecyclerView.ViewHolder h=recyclerView.findViewHolderForAdapterPosition(i);
+                 View itemView=h.itemView;
+                 Button btn_first=itemView.findViewById(R.id.btn_first);
+                 Button btn_top=itemView.findViewById(R.id.btn_top);
+                 Button btn_middle=itemView.findViewById(R.id.btn_middle);
+                 Button btn_bottom=itemView.findViewById(R.id.btn_bottom);
+                 Button btn_corners=itemView.findViewById(R.id.btn_corners);
+                 Button btn_full=itemView.findViewById(R.id.btn_full);
+                 if(claimType.equals("firstfive")){
+                     btn_first.setText("CLAIMED");
+                 }else if(claimType.equals("top")){
+                     btn_top.setText("CLAIMED");
+                 }else if(claimType.equals("middle")){
+                     btn_middle.setText("CLAIMED");
+                 }else if(claimType.equals("last")){
+                     btn_bottom.setText("CLAIMED");
+                 }else if(claimType.equals("housie")){
+                     btn_full.setText("CLAIMED");
+                 }else if(claimType.equals("corners")){
+                     btn_corners.setText("CLAIMED");
+                 }
+             }
+         }
+
+     }
 
  }
 
@@ -231,7 +267,7 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
         new BackgroundTask(context, new BackgroundThread() {
             @Override
             public Object runTask() {
-                return ApiServices.claimTicket(context, claimRequestModel(ticketId,claimTicket,claim_type));
+                return ApiServices.startGame(context, claimRequestModel(ticketId,claimTicket,claim_type));
             }
 
             public void taskCompleted(Object data) {
@@ -245,16 +281,20 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
     private String claimRequestModel(int ticketId,List<Integer> tiket_nos,String claim_type) {
 
 
-        String user_id , game_id;
+        String user_id , game_id,regid;
         user_id= SharedPreferenceUtil.getId(context);
         game_id=SharedPreferenceUtil.getRoom_id(context);
+        regid=SharedPreferenceUtil.getMobile_number(context);
         ArrayList<JSONObject> claimUsers=new ArrayList();
         JSONObject cliamObj=new JSONObject();
         try {
             cliamObj.put("user_id",user_id);
             cliamObj.put("ticket_id",ticketId);
-            cliamObj.put("tiket_nos",tiket_nos);
+            cliamObj.put("game_nos",tiket_nos);
             cliamObj.put("claim_type",claim_type);
+            cliamObj.put("game_id",game_id);
+            cliamObj.put("regid",regid);
+            cliamObj.put("type","CLAIM");
             claimUsers.add(cliamObj);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -267,15 +307,15 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
                 "tiket_nos":"[51,66,17,43,26,78,22,67,29,45,3,70,5,71,84,88,18,81,44,12,19,49,75,4,60,90,2,65,21,48,40,54,62,34,28,30,15,9,32,47,58,79,35,83,7,52,13,24,10,8,56,38,20,55,82,76,69,16,46,33,74,85,89,64,39,80,1,6,59,57,36,68,61,73,14,77,50,87,42,37,63,86,53,41,27,72,11,23,25,31]","claim_type":"first"}],
             "game_id":"827"}*/
 
-        JSONObject requestObject = new JSONObject();
+        /*JSONObject requestObject = new JSONObject();
         try {
             requestObject.put("claimUsers", claimUsers);
             requestObject.put("game_id", game_id);
             System.out.println(requestObject.toString());
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-        return requestObject.toString();
+        }*/
+        return cliamObj.toString();
     }
 
 }

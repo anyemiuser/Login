@@ -57,8 +57,8 @@ public class NumbersActivity extends AppCompatActivity {
     TicketsModel model;
     int random_number_index = 0;
     String noOfTickets = "";
-
-
+    TicketRecyclerViewAdapter ticketAdapter;
+    Boolean gamestarted=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +104,7 @@ public class NumbersActivity extends AppCompatActivity {
         generate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!gamestarted)
                 startGame();
               /*  Integer number = r.nextInt(90) + 1;
                 textView.setText(Integer.toString(number));
@@ -132,9 +133,9 @@ public class NumbersActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 model = gson.fromJson(data.toString(), TicketsModel.class);
                 List<List<List<Integer>>> data1 = model.getTicket_nos();
-                TicketRecyclerViewAdapter adapter1 = new TicketRecyclerViewAdapter(getApplicationContext(), data1,model.getTicket_id());
+                 ticketAdapter = new TicketRecyclerViewAdapter(getApplicationContext(), data1,model.getTicket_id(),rvtickets);
                 //  adapter.setClickListener(this);
-                rvtickets.setAdapter(adapter1);
+                rvtickets.setAdapter(ticketAdapter);
                 if(model.getNos()!=null) {
                     data_all.addAll(model.getNos());
                    // startTimer();
@@ -231,14 +232,10 @@ public class NumbersActivity extends AppCompatActivity {
         new CountDownTimer(spam, 1000) {
             public void onTick(long millisUntilFinished) {
             }
-
             public void onFinish() {
-
-
                 if (random_number_index >= data_all.size() - 1) {
                     Globals.showToast(getApplicationContext(), "Number Completed");
                 } else {
-
                     random_number_index = random_number_index + 1;
                     startTimer();
                 }
@@ -268,10 +265,8 @@ public class NumbersActivity extends AppCompatActivity {
         new BackgroundTask(NumbersActivity.this, new BackgroundThread() {
             @Override
             public Object runTask() {
-
                 return ApiServices.getGameUsers(NumbersActivity.this,randomnumberRequestModel());
             }
-
             public void taskCompleted(Object data) {
                 Globals.showToast(getApplicationContext(), data.toString());
                 Log.e("responseusers",data.toString());
@@ -308,9 +303,21 @@ public class NumbersActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if(intent!=null){
                 String type=intent.getStringExtra("type");
-                if(type.equals("START_GAME")){
-                    startTimer();
-                }
+                String claim_type=intent.getStringExtra("claim_type");
+                String ticket_id=intent.getStringExtra("ticket_id");
+                String game_id=intent.getStringExtra("game_id");
+                String status=intent.getStringExtra("status");
+               String game_no=SharedPreferenceUtil.getRoom_id(context);
+
+              // if(game_id.equals(game_no)) {
+                   if (type.equals("START_GAME")) {
+                       startTimer();
+                       gamestarted = true;
+                   } else if (type.equals("CLAIM") && status.equals("success")) {
+                       Integer val = Integer.parseInt(ticket_id);
+                       ticketAdapter.claimResp(val, claim_type, status);
+                   }
+               //}
             }
 
         }
