@@ -268,7 +268,7 @@ public class NumbersActivity extends AppCompatActivity {
                 return ApiServices.getGameUsers(NumbersActivity.this,randomnumberRequestModel());
             }
             public void taskCompleted(Object data) {
-                Globals.showToast(getApplicationContext(), data.toString());
+             //   Globals.showToast(getApplicationContext(), data.toString());
                 Log.e("responseusers",data.toString());
                 Gson gson=new Gson();
                 UsersListModel model=gson.fromJson(data.toString(), UsersListModel.class);
@@ -313,9 +313,13 @@ public class NumbersActivity extends AppCompatActivity {
                    if (type.equals("START_GAME")) {
                        startTimer();
                        gamestarted = true;
-                   } else if (type.equals("CLAIM") && status.equals("success")) {
-                       Integer val = Integer.parseInt(ticket_id);
-                       ticketAdapter.claimResp(val, claim_type, status);
+                   } else if (type.equals("CLAIM")&&status!=null) {
+                       if(status.equals("success")) {
+                           Integer val = Integer.parseInt(ticket_id);
+                           ticketAdapter.claimResp(val, claim_type, status);
+                       }else {
+                           Globals.showToast(getApplicationContext(),"Claim Failed..!!");
+                       }
                    }
                //}
             }

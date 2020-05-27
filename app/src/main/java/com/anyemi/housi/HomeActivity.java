@@ -5,26 +5,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.anyemi.housi.Adapters.GameUsersAdapter;
+import com.anyemi.housi.Adapters.JoinedUsersAdapter;
 import com.anyemi.housi.connection.ApiServices;
 import com.anyemi.housi.connection.bgtask.BackgroundTask;
 import com.anyemi.housi.connection.bgtask.BackgroundThread;
+import com.anyemi.housi.model.UsersListModel;
 import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class HomeActivity extends  AppCompatActivity {
     private EditText et_JoinId;
     private Button btn_playonline, btn_createroom, btn_joinroom,btn_Join,btn_game_history;
-
+    ListView lv_users;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
@@ -47,6 +58,7 @@ public class HomeActivity extends  AppCompatActivity {
                 setContentView(R.layout.activity_joinroom_popup);
                 et_JoinId = findViewById(R.id.et_Join_id);
                 btn_Join = findViewById(R.id.btn_join);
+                lv_users=findViewById(R.id.lv_users);
 
                 btn_Join.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -56,6 +68,12 @@ public class HomeActivity extends  AppCompatActivity {
                         }
 
 
+                    }
+                });
+                lv_users.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        showDialog();
                     }
                 });
             }
@@ -89,6 +107,44 @@ public class HomeActivity extends  AppCompatActivity {
         return isValid;
 
     }
+    private void getUsers() {
+
+        new BackgroundTask(HomeActivity.this, new BackgroundThread() {
+            @Override
+            public Object runTask() {
+                return ApiServices.getGameUsers(HomeActivity.this,randomnumberRequestModel());
+            }
+            public void taskCompleted(Object data) {
+                //   Globals.showToast(getApplicationContext(), data.toString());
+                Log.e("responseusers",data.toString());
+                Gson gson=new Gson();
+                UsersListModel model=gson.fromJson(data.toString(), UsersListModel.class);
+                List<UsersListModel.PlayersBean> data1=model.getPlayers();
+                JoinedUsersAdapter adapter=new JoinedUsersAdapter(HomeActivity.this,R.layout.recycleview_users_item,data1);
+                lv_users.setAdapter(adapter);
+            }
+        }, getString(R.string.loading_txt)).execute();
+    }
+    private String randomnumberRequestModel() {
+
+
+        String user_id , game_id;
+        user_id=SharedPreferenceUtil.getId(getApplicationContext());
+        game_id=SharedPreferenceUtil.getRoom_id(getApplicationContext());
+        // room_id=SharedPreferenceUtil.getRoom_id(getApplicationContext());
+
+        //   version_id = BuildConfig.VERSION_NAME;
+
+        JSONObject requestObject = new JSONObject();
+        try {
+            requestObject.put("game_id", game_id);
+            System.out.println(requestObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return requestObject.toString();
+    }
+
     private void getcreateroom() {
 
         new BackgroundTask(HomeActivity.this, new BackgroundThread() {
@@ -122,9 +178,10 @@ public class HomeActivity extends  AppCompatActivity {
                // createRoom= new Gson().fromJson(data.toString(),CreateRoom.class);
                 SharedPreferenceUtil.setRoom_id(getApplicationContext(), et_JoinId.getText().toString());
                // SharedPreferenceUtil.setUser_id(getApplicationContext(), createRoom.getUser_id());
+                getUsers();
 
                 Globals.showToast(getApplicationContext(), data.toString());
-                showDialog();
+
              /*   Intent mediaActivity = new Intent(getApplicationContext(), NumbersActivity.class);
                 startActivity(mediaActivity);*/
            }
