@@ -1,7 +1,10 @@
 package com.anyemi.housi;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -42,6 +45,8 @@ public class HomeActivity extends  AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
+        IntentFilter intentFilter = new IntentFilter(FirebaseMessagingServices.ACTION_RECEIVE);
+        registerReceiver(receiver, intentFilter);
         btn_playonline = findViewById(R.id.btn_play_online);
         btn_createroom = findViewById(R.id.btn_create_room);
         btn_joinroom = findViewById(R.id.btn_join_room);
@@ -89,6 +94,13 @@ public class HomeActivity extends  AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
 
     private boolean performValidation() {
         boolean isValid = false;
@@ -178,7 +190,8 @@ public class HomeActivity extends  AppCompatActivity {
                // createRoom= new Gson().fromJson(data.toString(),CreateRoom.class);
                 SharedPreferenceUtil.setRoom_id(getApplicationContext(), et_JoinId.getText().toString());
                // SharedPreferenceUtil.setUser_id(getApplicationContext(), createRoom.getUser_id());
-                getUsers();
+                startGame();
+               // getUsers();
 
                 Globals.showToast(getApplicationContext(), data.toString());
 
@@ -186,6 +199,42 @@ public class HomeActivity extends  AppCompatActivity {
                 startActivity(mediaActivity);*/
            }
         }, getString(R.string.loading_txt)).execute();
+    }
+    private void startGame() {
+
+        new BackgroundTask(HomeActivity.this, new BackgroundThread() {
+            @Override
+            public Object runTask() {
+                return ApiServices.startGame(HomeActivity.this, startGameModel());
+            }
+
+            public void taskCompleted(Object data) {
+                Log.e("response users notif",data.toString());
+                Globals.showToast(getApplicationContext(), data.toString());
+            }
+        }, getString(R.string.loading_txt)).execute();
+    }
+
+    private String startGameModel() {
+
+
+        String user_id, game_id;
+        user_id = SharedPreferenceUtil.getMobile_number(getApplicationContext());
+        game_id = SharedPreferenceUtil.getRoom_id(getApplicationContext());
+        // room_id=SharedPreferenceUtil.getRoom_id(getApplicationContext());
+
+        //   version_id = BuildConfig.VERSION_NAME;
+
+        JSONObject requestObject = new JSONObject();
+        try {
+            requestObject.put("regid", user_id);
+            requestObject.put("game_id", game_id);
+            requestObject.put("type", "GETUSERS");
+            System.out.println(requestObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return requestObject.toString();
     }
 
     private String joinroomRequestModel() {
@@ -314,6 +363,24 @@ public class HomeActivity extends  AppCompatActivity {
         alert.show();
 
     }
+    BroadcastReceiver receiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent!=null){
+                String type=intent.getStringExtra("type");
+
+                String game_no=SharedPreferenceUtil.getRoom_id(context);
+
+                // if(game_id.equals(game_no)) {
+                if (type.equals("GETUSERS")) {
+                    getUsers();
+                }
+                //}
+            }
+
+        }
+    };
+
 
     public void onBackPressed() {
         new AlertDialog.Builder(this)
@@ -322,7 +389,7 @@ public class HomeActivity extends  AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        //unregisterReceiver(receiver);
 finish();}
                 })
                 .setNegativeButton("No", null).show();
@@ -330,7 +397,7 @@ finish();}
 
 }
 
-/*private String prepareRequest(){
+  /*private String prepareRequest(){
     String room_id;
     room_id=SharedPreferenceUtil.getRoom_id(getApplicationContext());
     JSONObject requestObject = new JSONObject();

@@ -12,7 +12,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anyemi.housi.connection.ApiServices;
 import com.anyemi.housi.connection.Constants;
+import com.anyemi.housi.connection.bgtask.BackgroundTask;
+import com.anyemi.housi.connection.bgtask.BackgroundThread;
+import com.anyemi.housi.utils.Globals;
 import com.anyemi.housi.utils.SharedPreferenceUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,8 +25,10 @@ import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -48,11 +54,13 @@ public class MainActivity extends AppCompatActivity {
     private CircleImageView circleImageView;
     private TextView txtName, txtEmail;
     private Button signout, btn_mobile,btn_guest;
+    LoginButton login_button_fb;
     // private SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
     private CallbackManager callbackManager;
     int RC_SIGN_IN = 6;
-
+    private String username = "", password = "", email = "", language = "en", fullname = "", photo_url = "", referrer = "", facebook_id = "";
+    String token;
 
 
     @Override
@@ -62,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         String user_id;
+
         user_id = SharedPreferenceUtil.getId(getApplicationContext());
         if (!user_id.equals("")) {
             Intent i = new Intent(getApplicationContext(), HomeActivity.class);
@@ -77,7 +86,29 @@ public class MainActivity extends AppCompatActivity {
         signout = findViewById(R.id.gsignout);
         btn_mobile = findViewById(R.id.btn_mobile_signin);
         btn_guest = findViewById(R.id.btn_guest_play);
+        login_button_fb=findViewById(R.id.login_button_fb);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
         // signInButton = findViewById(R.id.sign_in_button);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("getInstanceId", "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        token = task.getResult().getToken();
+
+                        // Log and toast
+                        //  String msg = getString(R.string.msg_token_fmt, token);
+                        Log.e("token", token);
+                        //  Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
         btn_mobile.setOnClickListener(new View.OnClickListener() {
@@ -96,9 +127,39 @@ public class MainActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
         //  updateUI(account);
+        login_button_fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login_button_fb.setPermissions("public_profile"); // "email",
+
+                // Registering CallbackManager with the LoginButton
+                login_button_fb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.e("Retrieving","success");
+                        // Retrieving access token using the LoginResult
+                        AccessToken accessToken = loginResult.getAccessToken();
+
+                        useLoginInformation(accessToken);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.e("Retrieving","cancel");
+
+                    }
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.e("Retrieving","error");
+
+                    }
+                });
+
+            }
+        });
 
 
-        callbackManager = CallbackManager.Factory.create();
         //loginButton.setReadPermissions(Arrays.asList("email","public_profile"));
         // checkLoginStatus();
        /* loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -250,5 +311,126 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
 
+    }
+    private void useLoginInformation(AccessToken accessToken) {
+
+        /**
+         Creating the GraphRequest to fetch user details
+         1st Param - AccessToken
+         2nd Param - Callback (which will be invoked once the request is successful)
+         **/
+
+       // showpDialog();
+
+        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+
+            //OnCompleted is invoked once the GraphRequest is successful
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                Log.e("object fb",object.toString());
+
+                try {
+
+                    if (object.has("id")) {
+
+                        facebook_id = object.getString("id");
+                    }
+
+                    if (object.has("name")) {
+
+                        fullname = object.getString("name");
+                    }
+
+                    if (object.has("email")) {
+
+                        email = object.getString("email");
+                    }
+
+                } catch (JSONException e) {
+
+                    Log.e("Facebook Login", "Could not parse malformed JSON: \"" + object.toString() + "\"");
+
+                } finally {
+
+                    if (AccessToken.getCurrentAccessToken() != null) LoginManager.getInstance().logOut();
+
+                    if (!facebook_id.equals("")) {
+                        Log.e("object fb",facebook_id);
+                        postMobileNumber();
+
+                        //signinByFacebookId();
+
+                    } else {
+                        Globals.showToast(getApplicationContext(),"Invalid Login...!!");
+
+                        //hide();
+                    }
+                }
+            }
+        });
+
+        // We set parameters to the GraphRequest using a Bundle.
+        Bundle parameters = new Bundle();
+        // parameters.putString("fields", "id,name,email,picture.width(200)");
+        parameters.putString("fields", "id, name");
+        request.setParameters(parameters);
+        // Initiate the GraphRequest
+        request.executeAsync();
+    }
+    private void postMobileNumber() {
+
+        new BackgroundTask(MainActivity.this, new BackgroundThread() {
+            @Override
+            public Object runTask() {
+
+                return ApiServices.login(MainActivity.this, fbLoginRequestModel(facebook_id));
+            }
+
+            public void taskCompleted(Object data) {
+
+              //  SharedPreferenceUtil.setMobile_number(getApplicationContext(), et_mobile.getText().toString());
+                Globals.showToast(getApplicationContext(), data.toString());
+
+                SharedPreferenceUtil.setUsername(getApplicationContext(), fullname);
+               SharedPreferenceUtil.setId(getApplicationContext(), facebook_id);
+
+
+                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(i);
+
+
+            /*    Intent mediaActivity = new Intent(getApplicationContext(), MediaActivity.class);
+                startActivity(mediaActivity);*/
+
+
+            }
+        }, getString(R.string.loading_txt)).execute();
+    }
+
+    private String fbLoginRequestModel(String id) {
+
+        String mobile_no, version_id;
+      //  mobile_no = et_mobile.getText().toString();
+        //   version_id = BuildConfig.VERSION_NAME;
+
+        JSONObject requestObject = new JSONObject();
+        try {
+          //  requestObject.put("mobile_number", mobile_no);
+            requestObject.put("device_id", token);
+            requestObject.put("type","FB");
+             requestObject.put("fb_id", id);
+            System.out.println(requestObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return requestObject.toString();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

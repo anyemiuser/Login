@@ -38,12 +38,15 @@ public class Last10Adapter extends RecyclerView.Adapter<Last10Adapter.ViewHolder
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(mData.get(position)> 0&&mData.get(position).equals(position+1)){
+        if(mData.get(position)> 0&&mData.size()==position+1){
             holder.myTextView.setText(String.valueOf(mData.get(position)));
-            holder.myTextView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            holder.myTextView.setBackground(context.getResources().getDrawable(R.drawable.round_button_red));
+
+            //holder.myTextView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimaryDark));
         }else {
             holder.myTextView.setText(String.valueOf(mData.get(position)));
-            holder.myTextView.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+            //holder.myTextView.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+            holder.myTextView.setBackground(context.getResources().getDrawable(R.drawable.round_button2));
 
         }
 

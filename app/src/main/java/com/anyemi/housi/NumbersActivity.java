@@ -91,7 +91,7 @@ public class NumbersActivity extends AppCompatActivity {
 
         rvtickets = findViewById(R.id.rvtickets);
         int numberOfColumns = 10;
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 10));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 5));
         adapter = new MyRecyclerViewAdapter(this, data);
 
         //  adapter.setClickListener(this);
@@ -192,7 +192,8 @@ public class NumbersActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return requestObject.toString();
-    } private String startGameModel() {
+    }
+    private String startGameModel() {
 
 
         String user_id, game_id;

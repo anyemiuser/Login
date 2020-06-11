@@ -77,9 +77,8 @@ class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewA
          for(int j=0;j<list.size();j++){
              final TextView view1=new TextView(context);
              LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                     60,
-                     LinearLayout.LayoutParams.MATCH_PARENT,
-                     1.0f
+                     65,
+                     65
              );
              if(j%2==1) {
                  param.setMargins(0, 0, 0, 0);
